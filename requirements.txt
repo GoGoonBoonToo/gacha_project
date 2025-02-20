@@ -1,1 +1,7 @@
-Flask==2.2.2
+echo "Flask" >> requirements.txt
+echo "gunicorn" >> requirements.txt
+git add requirements.txt
+git commit -m "Add Flask and Gunicorn to requirements"
+git push origin main
+
+requests
