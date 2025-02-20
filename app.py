@@ -1,8 +1,9 @@
 import logging
 import random
+import os
 from flask import Flask, jsonify, render_template, session
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder=os.path.abspath("templates"))  # templates 폴더 위치 명확히 지정
 app.secret_key = 'your_secret_key'  # 세션을 사용하기 위한 키 설정
 
 # 로그 설정 추가
