@@ -29,9 +29,9 @@ def select_team(mode):
     
     # 그룹 선택 확률 설정
     if mode == "normal":
-        group_weights = [0.4, 0.6]  # 일반 뽑기 A/B 그룹 확률 40%/60%
+        group_weights = [0.35, 0.65]  # 일반 뽑기 A/B 그룹 확률 35%/65%
     else:
-        group_weights = [0.7, 0.3]  # 진 팀 뽑기 A/B 그룹 확률 70%/30%
+        group_weights = [0.8, 0.2]  # 진 팀 뽑기 A/B 그룹 확률 80%/20%
     
     # 선택할 그룹 결정
     available_group_keys = [key for key in groups.keys() if available_teams[key]]
