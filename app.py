@@ -32,11 +32,15 @@ def select_team(mode):
     if mode == "normal":
         group_weights = [0.35, 0.65]  # 일반 뽑기 A/B 그룹 확률 35%/65%
     else:
-        group_weights = [0.8, 0.2]  # 진 팀 뽑기 A/B 그룹 확률 80%/20%
+        group_weights = [0.75, 0.25]  # 진 팀 뽑기 A/B 그룹 확률 75%/25%
     
-    # 선택할 그룹 결정
+    # 선택할 그룹 결정 (A 또는 B 그룹이 소진되었을 경우 다른 그룹을 자동 선택)
     available_group_keys = [key for key in groups.keys() if available_teams[key]]
-    chosen_group = random.choices(available_group_keys, weights=[group_weights["A" == key] for key in available_group_keys], k=1)[0]
+    
+    if len(available_group_keys) == 1:
+        chosen_group = available_group_keys[0]  # 하나의 그룹만 남았으면 무조건 선택
+    else:
+        chosen_group = random.choices(available_group_keys, weights=[group_weights[0] if key == "A" else group_weights[1] for key in available_group_keys], k=1)[0]
     
     # 해당 그룹 내에서 균등 확률로 팀 선택
     chosen_team = random.choice(available_teams[chosen_group])
