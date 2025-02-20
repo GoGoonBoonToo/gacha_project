@@ -1,9 +1,12 @@
-from flask import Flask, jsonify, render_template, session
+import logging
 import random
-import keep_alive
+from flask import Flask, jsonify, render_template, session
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # 세션을 사용하기 위한 키 설정
+
+# 로그 설정 추가
+logging.basicConfig(level=logging.DEBUG)
 
 # A, B 그룹 설정
 groups = {
@@ -43,7 +46,12 @@ def select_team(mode):
 
 @app.route('/')
 def home():
-    return render_template("index.html")
+    app.logger.info("홈 페이지 접근")
+    try:
+        return render_template("index.html")
+    except Exception as e:
+        app.logger.error(f"오류 발생: {e}")
+        return "Internal Server Error", 500
 
 @app.route('/gacha/normal', methods=['GET'])
 def gacha_normal():
@@ -62,24 +70,3 @@ def reset():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
-
-import logging
-from flask import Flask, render_template
-
-app = Flask(__name__)
-
-# 로그 설정 추가
-logging.basicConfig(level=logging.DEBUG)
-
-@app.route('/')
-def home():
-    app.logger.info("홈 페이지 접근")
-    try:
-        return render_template("index.html")
-    except Exception as e:
-        app.logger.error(f"오류 발생: {e}")
-        return "Internal Server Error", 500
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
-
